@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<title>RandCam</title>
+	
+	<link rel="stylesheet" href="static/styles.css">
+	<script src="static/index.js"></script>
+</head>
+
+<body>
+	<div class="Cameras">
+		{{range .Links}}<img class="Camera" src="{{.}}" onclick="selectImage(this)" />{{end}}
+	</div>
+	
+	<div id="Popup" class="Popup">
+		<IMG id="Popup-Image" class="Popup-IMG" src="" />
+		<div class="Popup-Close" onclick="closePopup()">X</div>
+	</div>
+</body>
+
+</html>

@@ -13,10 +13,14 @@
 
 <body>
 	<div class="Cameras">
-		{{range .Links}}<img class="Camera" src="{{.}}" onclick="selectImage(this)" />{{end}}
+		{{range .Results}}<div class="Camera">
+			<img class="Camera-Src" src="{{.Src}}" onclick="selectImage(this)" title="{{.Location}}" />
+			<div class="Camera-Loc">{{.Location}}</div>
+		</div>{{end}}
 	</div>
 	
 	<div id="Popup" class="Popup">
+		<div id="Popup-Text" class="Popup-Text"></div>
 		<IMG id="Popup-Image" class="Popup-IMG" src="" />
 		<div class="Popup-Close" onclick="closePopup()">X</div>
 	</div>

@@ -17,8 +17,13 @@ import(
 //Embed
 //go:embed html/*
 var HTMLFiles embed.FS
+var scraper *Scraper
 
 func main() {
+	//Scraper
+	scraper = NewScraper()
+
+	//Server
 	router := httprouter.New()
 	router.GET("/", Handle)
 	router.ServeFiles("/static/*filepath", http.Dir("html/static"))
@@ -35,12 +40,11 @@ func Handle(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		log.Println("Dashboard Template Parse: ", parseErr)
 	}
 	
-	links := search()
-	
+	results := scraper.Scrape()
 	templateData := struct {
-    	Links []string
+    	Results []*Result
 	}{
-		links,
+		results,
 	}
 	
 	

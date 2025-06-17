@@ -23,7 +23,7 @@ type Result struct {
 	Src string
 	Location string
 }
-
+//<a class="Control-Prev" href="./?p={{.Prev}}">&lt; Prev</a>
 
 func NewScraper() *Scraper {
 	scraper := &Scraper{

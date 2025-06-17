@@ -6,6 +6,7 @@ import(
 	
 	"log"
 	"embed"
+	"strconv"
 	"context"
 	"net/http"
 	"html/template"
@@ -40,11 +41,26 @@ func Handle(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		log.Println("Dashboard Template Parse: ", parseErr)
 	}
 	
+	rawPage := r.URL.Query()["p"]
+	if len(rawPage) > 0 {
+		page, err := strconv.Atoi(rawPage[0])
+		if err == nil {
+			scraper.page = page
+		}
+	}
+	
 	results := scraper.Scrape()
+	isFirst := scraper.page > 1
+	
 	templateData := struct {
     	Results []*Result
+    	First bool
+    	Prev, Next int
 	}{
 		results,
+		isFirst,
+		scraper.page-1,
+		scraper.page+1,
 	}
 	
 	

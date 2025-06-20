@@ -8,12 +8,11 @@
 	<title>RandCam</title>
 	
 	<link rel="stylesheet" href="static/styles.css">
-	<script src="static/index.js"></script>
 </head>
 
 <body>
 	<div class="Cameras">
-		{{range .Results}}<div class="Camera">
+		{{range .Results}}<div class="Camera {{.Type}}" >
 			<img class="Camera-Src" src="{{.Src}}" onclick="selectImage(this)" title="{{.Location}}" />
 			<div class="Camera-Loc">{{.Location}}</div>
 		</div>{{end}}
@@ -32,6 +31,8 @@
 		<IMG id="Popup-Image" class="Popup-IMG" src="" />
 		<div class="Popup-Close" onclick="closePopup()">X</div>
 	</div>
+	
+	<script src="static/index.js"></script>
 </body>
 
 </html>

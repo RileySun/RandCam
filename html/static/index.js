@@ -72,3 +72,23 @@ function popupControls(e) {
 }
 
 document.addEventListener("keyup", (e) => {controls(e)}, false)
+
+//JPEG fetch stream
+function refreshImage(image) {
+	const src = image.src.split("&r=")[0];
+	image.src = src + "&r=" + new Date().getTime();
+	setTimeout(() => {refreshImage(image)}, 2000)
+}
+
+//Setup
+function setup() {
+	const jpegsElem = document.querySelectorAll(".jpg > img")
+	const jpegs = Array.from(jpegsElem)
+	jpegs.forEach(jpeg => (
+		jpeg.onload = () => {
+			refreshImage(jpeg)
+			jpeg.onload = () => {}
+		}
+	))
+}
+setup()

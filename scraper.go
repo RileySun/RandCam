@@ -6,8 +6,10 @@ import(
 	"strconv"
 	"strings"
 	"context"
+	"net/url"
 	"net/http"
 	"io/ioutil"
+	"path/filepath"
 	
 	"golang.org/x/net/html"
 	"github.com/andybalholm/cascadia"
@@ -22,6 +24,7 @@ type Scraper struct {
 type Result struct {
 	Src string
 	Location string
+	Type string
 }
 //<a class="Control-Prev" href="./?p={{.Prev}}">&lt; Prev</a>
 
@@ -97,10 +100,18 @@ func (s *Scraper) parse(doc *html.Node) []*Result {
 	for n := range children {
 		imgs := querySelectorAll(n, "img")
 		
+		
 		for _, i := range imgs {
+			src := getAttribute(i, "src")
+			urlNoQuery, err := url.Parse(src)
+			if err != nil {
+				log.Println(err)
+			}
+			
 			res := &Result{
-				Src:getAttribute(i, "src"),
+				Src:src,
 				Location:getAttribute(i, "title")[20:],
+				Type:filepath.Ext(urlNoQuery.Path)[1:],
 			}
 			results = append(results, res)
 		}	
